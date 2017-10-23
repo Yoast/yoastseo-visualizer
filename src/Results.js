@@ -34,8 +34,6 @@ class Result extends Component {
 	render() {
 		let { research, value } = this.props;
 
-		// console.log( value );
-
 		if ( this.state.hasError ) {
 			return <tr><td>{this.state.error}</td></tr>
 		}
@@ -56,8 +54,6 @@ class Result extends Component {
 		return <tr>
 			<td>
 				{research}
-				|
-				{func}
 			</td>
 			<td>
 				{rendered}
