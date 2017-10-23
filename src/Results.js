@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { isArray, isObject, round } from "lodash-es";
+import { isArray, isObject, round, isEqual } from "lodash-es";
 import { Value } from "react-object";
 
 function capitalize(string) {
@@ -12,11 +12,31 @@ class Result extends Component {
 
 		this.state = {
 			hasError: false,
+			previousValue: null,
 		};
 	}
 
 	componentDidCatch( error, info ) {
 		this.setState({ hasError: true, error, info });
+	}
+
+	shouldComponentUpdate( nextProps, nextState ) {
+		// console.log( 'compare' );
+		// console.log( this.state.previousValue );
+		// console.log( nextProps.value );
+		if ( isEqual( this.state.previousValue , nextProps.value ) ) {
+			// console.log( 'equal' );
+			return false;
+		}
+
+		// console.log( 'different' );
+		return true;
+	}
+
+	componentWillUpdate( nextProps, nextState ) {
+		this.setState( {
+			previousValue: nextProps.value,
+		} );
 	}
 
 	transformGetKeywordDensity( value ) {
@@ -34,6 +54,8 @@ class Result extends Component {
 	render() {
 		let { research, value } = this.props;
 
+		// console.log( 'rendering research ', research );
+
 		if ( this.state.hasError ) {
 			return <tr><td>{this.state.error}</td></tr>
 		}
@@ -48,7 +70,7 @@ class Result extends Component {
 		if ( typeof this[ func ] === "function" ) {
 			rendered = this[ func ]( value );
 		} else {
-			rendered = <Value value={value} isExpanded={true} />
+			rendered = <Value value={value} isExpanded={true} onClick={()=>{}} />
 		}
 
 		return <tr>
@@ -72,10 +94,8 @@ class Results extends Component {
 
 		let keys = Object.keys( results );
 
-		console.log( results );
-
 		return (
-			<div>
+			<div style={this.props.style}>
 				<table>
 					<tbody>
 						{ keys.map( ( key ) => {

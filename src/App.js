@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Paper, Researcher } from 'yoastseo';
-import { zipObject } from "lodash-es";
+import { zipObject, debounce } from "lodash-es";
 import Results from "./Results";
 
 class App extends Component {
@@ -65,9 +65,11 @@ class App extends Component {
 		this.state = {
 			paper,
 			results: this.getResults( paper ),
+			isUpdating: false,
 		};
 
 		this.changeText = this.changeText.bind( this );
+		this.debouncedAnalysis = debounce( this.analyze, 500 );
 	}
 
 	changeText( event ) {
@@ -77,16 +79,22 @@ class App extends Component {
 			paper,
 		} );
 
-		this.analyze();
+		this.debouncedAnalysis();
 	}
 
 	analyze() {
-
-		let results = this.getResults( this.state.paper );
-
 		this.setState( {
-			results: results
+			isUpdating: true,
 		} );
+
+		setTimeout( () => {
+			let results = this.getResults( this.state.paper );
+
+			this.setState( {
+				results: results,
+				isUpdating: false,
+			} );
+		}, 50 );
 	}
 
 	getResults( paper ) {
@@ -102,22 +110,29 @@ class App extends Component {
 	}
 
 	render() {
+		let resultStyles = {};
+		let updating = null;
+		if ( this.state.isUpdating ) {
+			updating = "Updating results";
+			resultStyles.display = "none";
+		}
+
 		return (
 			<div className="App">
 				<header className="App-header">
 					<img src={logo} className="App-logo" alt="logo"/>
-					<h1 className="App-title">Welcome to React</h1>
+					<h1 className="App-title">Welcome to the YoastSEO.js visualizer</h1>
 				</header>
 				<p className="App-intro">
-					To get started, edit <code>src/App.js</code> and save to
-					reload.
+					To get started, put in your text and see the results.
 				</p>
 				<div className="App-body">
 					<p>
 						<textarea onChange={this.changeText} value={this.state.paper.getText()} />
 					</p>
 					<h2>Results</h2>
-					<Results results={this.state.results} />
+					{updating}
+					<Results results={this.state.results} style={resultStyles} />
 				</div>
 			</div>
 		);
