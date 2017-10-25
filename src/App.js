@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Paper, Researcher } from 'yoastseo';
-import { zipObject, debounce } from "lodash-es";
+import { zipObject, debounce, omit } from "lodash-es";
 import Results from "./Results";
 
 class App extends Component {
@@ -69,17 +69,41 @@ class App extends Component {
 		};
 
 		this.changeText = this.changeText.bind( this );
+		this.changeKeyword = this.changeKeyword.bind( this );
 		this.debouncedAnalysis = debounce( this.analyze, 500 );
 	}
 
-	changeText( event ) {
-		const paper = new Paper( event.target.value );
+	changePaper( newValues ) {
+		const oldPaper = this.state.paper;
 
-		this.setState( {
-			paper,
-		} );
+		const values = Object.assign( {}, {
+			text: oldPaper.getText(),
+			keyword: oldPaper.getKeyword(),
+			description: oldPaper.getDescription(),
+			title: oldPaper.getTitle(),
+			titleWidth: oldPaper.getTitleWidth(),
+			url: oldPaper.getUrl(),
+			locale: oldPaper.getLocale(),
+			permalink: oldPaper.getPermalink(),
+		}, newValues );
+
+		const paper = new Paper( values.text, omit( values, 'text' ) );
+
+		this.setState( { paper } );
 
 		this.debouncedAnalysis();
+	}
+
+	changeText( event ) {
+		this.changePaper( {
+			text: event.target.value,
+		} );
+	}
+
+	changeKeyword( event ) {
+		this.changePaper( {
+			keyword: event.target.value,
+		} );
 	}
 
 	analyze() {
@@ -128,7 +152,8 @@ class App extends Component {
 				</p>
 				<div className="App-body">
 					<p>
-						<textarea onChange={this.changeText} value={this.state.paper.getText()} />
+						Content: <textarea onChange={this.changeText} value={this.state.paper.getText()} />
+						Keyword: <input type="text" onChange={this.changeKeyword} value={this.state.paper.getKeyword()} />
 					</p>
 					<h2>Results</h2>
 					{updating}
