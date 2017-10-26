@@ -164,16 +164,28 @@ class App extends Component {
 					<img src={logo} className="App-logo" alt="logo"/>
 					<h1 className="App-title">Welcome to the YoastSEO.js visualizer</h1>
 				</header>
-				<p className="App-intro">
-					To get started, put in your text and see the results.
-				</p>
+				<div className="App-intro">
+                    <h1>Input</h1>
+					<p>To get started, put in your text and see the results.</p>
+				</div>
 				<div className="App-body">
-					<p>
-						Content: <textarea onChange={this.changeText} value={this.state.paper.getText()} />
-						Keyword: <input type="text" onChange={this.changeKeyword} value={this.state.paper.getKeyword()} />
-						Url: <input type="text" onChange={this.changeUrl} value={this.state.paper.getUrl()} />
-						Description: <textarea onChange={this.changeDescription} value={this.state.paper.getDescription()} />
-					</p>
+					<div className="Input-content">
+						<h3>Content:</h3>
+                        <textarea onChange={this.changeText} value={this.state.paper.getText()} />
+                    </div>
+                    <div className="Input-keyword">
+						<h3>Keyword:</h3>
+                        <input type="text" onChange={this.changeKeyword} value={this.state.paper.getKeyword()} />
+                    </div>
+                    <div className="Input-url">
+						<h3>Url:</h3>
+                        <input type="text" onChange={this.changeUrl} value={this.state.paper.getUrl()} />
+                    </div>
+                    <div className="Input-description">
+						<h3>Description:</h3>
+                        <textarea onChange={this.changeDescription} value={this.state.paper.getDescription()} />
+                    </div>
+					
 					<h2>Results</h2>
 					{updating}
 					<Results results={this.state.results} style={resultStyles} />
