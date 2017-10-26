@@ -58,7 +58,10 @@ class App extends Component {
 			'<div class=\'clear\'></div>\n' +
 			'Note that we have disabled the background color and text color controls in the block level mockup. These should be off by default in our opinion, and possibly only allow a subset of colors, chosen by the theme author, when enabled.\n' +
 			'\n' +
-			'I\'d love to discuss with you, in the comments here, on Github, on Slack: everywhere!<img width=\'266\' height=\'266\' src=\'https://cdn.yoast.com/app/uploads/2017/10/Gutenberg_FI-300x300.png\' class=\'attachment-266x266 size-266x266\' alt=\'\' srcset=\'https://cdn.yoast.com/app/uploads/2017/10/Gutenberg_FI-300x300.png 300w, https://cdn.yoast.com/app/uploads/2017/10/Gutenberg_FI-180x180.png 180w, https://cdn.yoast.com/app/uploads/2017/10/Gutenberg_FI-600x600.png 600w\' sizes=\'(max-width: 266px) 100vw, 266px\'></img>' );
+			'I\'d love to discuss with you, in the comments here, on Github, on Slack: everywhere!<img width=\'266\' height=\'266\' src=\'https://cdn.yoast.com/app/uploads/2017/10/Gutenberg_FI-300x300.png\' class=\'attachment-266x266 size-266x266\' alt=\'\' srcset=\'https://cdn.yoast.com/app/uploads/2017/10/Gutenberg_FI-300x300.png 300w, https://cdn.yoast.com/app/uploads/2017/10/Gutenberg_FI-180x180.png 180w, https://cdn.yoast.com/app/uploads/2017/10/Gutenberg_FI-600x600.png 600w\' sizes=\'(max-width: 266px) 100vw, 266px\'></img>', {
+			keyword: 'gutenberg',
+			permalink: 'https://yoast.com/gutenberg-gutenberg-gutenberg',
+		} );
 
 		this._researcher = new Researcher( paper );
 
@@ -70,6 +73,8 @@ class App extends Component {
 
 		this.changeText = this.changeText.bind( this );
 		this.changeKeyword = this.changeKeyword.bind( this );
+		this.changeUrl = this.changeUrl.bind( this );
+		this.changeDescription = this.changeDescription.bind( this );
 		this.debouncedAnalysis = debounce( this.analyze, 500 );
 	}
 
@@ -103,6 +108,18 @@ class App extends Component {
 	changeKeyword( event ) {
 		this.changePaper( {
 			keyword: event.target.value,
+		} );
+	}
+
+	changeUrl( event ) {
+		this.changePaper( {
+			url: event.target.value,
+		} );
+	}
+
+	changeDescription( event ) {
+		this.changePaper( {
+			description: event.target.value,
 		} );
 	}
 
@@ -154,6 +171,8 @@ class App extends Component {
 					<p>
 						Content: <textarea onChange={this.changeText} value={this.state.paper.getText()} />
 						Keyword: <input type="text" onChange={this.changeKeyword} value={this.state.paper.getKeyword()} />
+						Url: <input type="text" onChange={this.changeUrl} value={this.state.paper.getUrl()} />
+						Description: <textarea onChange={this.changeDescription} value={this.state.paper.getDescription()} />
 					</p>
 					<h2>Results</h2>
 					{updating}
