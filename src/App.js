@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+import logo from './logo2.svg';
 import './App.css';
 import { Paper, Researcher } from 'yoastseo';
 import { zipObject, debounce, omit } from "lodash-es";
@@ -162,33 +162,35 @@ class App extends Component {
 			<div className="App">
 				<header className="App-header">
 					<img src={logo} className="App-logo" alt="logo"/>
-					<h1 className="App-title">Welcome to the YoastSEO.js visualizer</h1>
+					<h1 className="App-title">Yoast SEO Data Visualizer</h1>
 				</header>
 				<div className="App-intro">
-                    <h1>Input</h1>
-					<p>To get started, put in your text and see the results.</p>
+                    <h2>Input</h2>
+					<p>This app can visualize all the data points that Yoast SEO uses to score your content.<br />To get started, add some text and <a href="#Results">see the results below</a>.</p>
 				</div>
 				<div className="App-body">
-					<div className="Input-content">
+					<div className="input-content">
 						<h3>Content:</h3>
                         <textarea onChange={this.changeText} value={this.state.paper.getText()} />
                     </div>
-                    <div className="Input-keyword">
-						<h3>Keyword:</h3>
+                    <div className="input-keyword">
+						<h3>Focus keyword:</h3>
                         <input type="text" onChange={this.changeKeyword} value={this.state.paper.getKeyword()} />
                     </div>
-                    <div className="Input-url">
-						<h3>Url:</h3>
+                    <div className="input-url">
+				        <h3>URL:</h3>
                         <input type="text" onChange={this.changeUrl} value={this.state.paper.getUrl()} />
                     </div>
-                    <div className="Input-description">
-						<h3>Description:</h3>
+                    <div className="input-description">
+						<h3>Meta description:</h3>
                         <textarea onChange={this.changeDescription} value={this.state.paper.getDescription()} />
                     </div>
 					
-					<h2>Results</h2>
-					{updating}
-					<Results results={this.state.results} style={resultStyles} />
+                    <div className="Results">
+                        <h2>Results</h2>
+                        {updating}
+                        <Results results={this.state.results} style={resultStyles} />
+                    </div>
 				</div>
 			</div>
 		);
