@@ -63,6 +63,8 @@ class App extends Component {
 			permalink: 'https://yoast.com/gutenberg-gutenberg-gutenberg',
 		} );
 
+		paper = new Paper();
+
 		this._researcher = new Researcher( paper );
 
 		this.state = {

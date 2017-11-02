@@ -45,12 +45,6 @@ class Result extends Component {
 		return value + '%';
 	}
 
-	renderGetLinks( links ) {
-		return links.map( link => {
-			return <Value value={link} />;
-		} );
-	}
-
 	render() {
 		let { research, value } = this.props;
 
@@ -70,7 +64,7 @@ class Result extends Component {
 		if ( typeof this[ func ] === "function" ) {
 			rendered = this[ func ]( value );
 		} else {
-			rendered = <Value value={value} isExpanded={true} onClick={()=>{}} />
+			rendered = <Value value={value} onClick={()=>{}} />
 		}
 
 		return <tr>
