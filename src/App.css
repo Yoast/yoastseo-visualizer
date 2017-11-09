@@ -10,7 +10,8 @@
 }
 
 .App-header {
-    background-color: #0075B3;
+    /*background-color: #0075B3; yoastcon blue*/
+    background-color: #A4286A;
     height: 52px;
     padding: 20px;
     color: white;
@@ -36,7 +37,8 @@ p {
 h2 {
     padding: 0.25em 0;
     font-size: 2em;
-    color: #0075B3;
+    /*color: #0075B3; yoastcon blue*/
+    color: #A4286A;
 }
 
 h3 {

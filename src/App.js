@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import logo from './logo2.svg';
+import logo from './flat.svg';
 import './App.css';
 import { Paper, Researcher } from 'yoastseo';
 import { zipObject, debounce, omit } from "lodash-es";
